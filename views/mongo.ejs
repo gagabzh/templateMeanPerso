@@ -1,0 +1,48 @@
+<html ng-app>
+<head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>pseudo</th>
+            <th>date</th>
+            <th>contenu</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <%
+        for(var i = 0 ; i < commNb ; i++) {
+        %>
+        <tr>
+            <td><%= commList[i].pseudo %></td>
+            <td><%= commList[i].date %></td>
+            <td><%= commList[i].contenu %></td>
+            <td>
+                <form id="supprimer" action="/supprimer" method = "post">
+                    <input type = "submit" value = "Retirer"/>
+                </form>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+<!--        <tbody>
+        <tr ng-repeat="comm in comms">
+            <td>{{comm.pseudo }}</td>
+            <td>{{comm.date}}</td>
+            <td>{{comm.contenu}}</td>
+            <td>
+                <form id="supprimer" action="/supprimer" method = "post">
+                    <input type = "submit" value = "Retirer"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>-->
+    </table>
+</div>
+</body>
+</html>
