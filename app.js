@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var angular = require('./routes/angular');
-var mongo = require('./routes/mongo');
+var index = require('./routes/indexCtrl');
+var users = require('./routes/usersCtrl');
+var angular = require('./routes/angularCtrl');
+var mongo = require('./routes/mongoCtrl');
 var mongoREST = require('./routes/mongoREST');
 var app = express();
 

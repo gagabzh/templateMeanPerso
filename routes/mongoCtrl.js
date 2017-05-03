@@ -5,29 +5,22 @@ var express = require('express');
 var router = express.Router();
 
 // Inclusion de Mongoose
-var mongoose = require('mongoose');
-var CommentaireArticleModel = require('../Public/javascripts/mangoConnect');
+var CommentaireArticleModel = require('../Public/javascripts/commentaireArticleSchema');
+var serviceDB = require('../Public/javascripts/serviceDB.js');
 
 router.get('/', function(req, res, next) {
-    mongoose.connect('mongodb://localhost/blog', function(err) {
-        if (err) { throw err; }
-    });
+    serviceDB.openDB();
     CommentaireArticleModel.find(null, function (err, comms) {
         if (err) {
-            mongoose.connection.close();
-            throw err;
+            serviceDB.closeDB()
         }
         var comments = comms;
         var nbre = comments.length;
-        mongoose.connection.close();
+        serviceDB.closeDB();
         res.render('mongo', {commList : comments, commNb : nbre});
     });
 }).get('/init',function(req, res, next) {
-    mongoose.connect('mongodb://localhost/blog', function (err) {
-        if (err) {
-            throw err;
-        }
-    });
+    serviceDB.openDB();
     // On crée une instance du Model
     var monCommentaire = new CommentaireArticleModel({ pseudo : 'Atinux' });
     monCommentaire.contenu = 'Salut, super article sur Mongoose !';
@@ -37,50 +30,46 @@ router.get('/', function(req, res, next) {
     // On le sauvegarde dans MongoDB !
     monCommentaire.save(function (err) {
         if (err) {
-            mongoose.connection.close();
+            serviceDB.closeDB();
             throw err;
         }
         console.log('Commentaire ajouté avec succès !');
         monCommentaire2.save(function (err) {
             if (err) {
-                mongoose.connection.close();
+                serviceDB.closeDB();
                 throw err;
             }
             console.log('Commentaire 2 ajouté avec succès !');
             // On se déconnecte de MongoDB maintenant
-            mongoose.connection.close();
+            serviceDB.closeDB();
             res.redirect('/mongo');
         });
     });
 
 }).get('/modify',function(req, res, next) {
-    mongoose.connect('mongodb://localhost/blog', function (err) {
-        if (err) {
-            throw err;
-        }
-    });
+    serviceDB.openDB();
     CommentaireArticleModel.update({ pseudo : 'Atinux'}, { pseudo : 'Nikita' }, { multi : true }, function (err) {
         if (err) {
-            mongoose.connection.close();
+            serviceDB.closeDB()
             throw err;
         }
         console.log('Pseudos modifiés !');
-        mongoose.connection.close();
+        serviceDB.closeDB();
         res.redirect('/mongo');
     });
-}).get('/supress',function(req, res, next) {
-    mongoose.connect('mongodb://localhost/blog', function (err) {
+}).get('/supressAll/*/*',function(req, res, next) {
+    serviceDB.openDB();
+    var datas = req.originalUrl.split('/');
+    var obj = {};
+    obj[datas[3]] = datas[4];
+    CommentaireArticleModel.remove(obj, function (err) {
         if (err) {
+            serviceDB.closeDB();
             throw err;
         }
-    });
-    CommentaireArticleModel.remove({ pseudo : 'Nikita' }, function (err) {
-        if (err) {
-            mongoose.connection.close();
-            throw err;
-        }
+
         console.log('Commentaires avec pseudo Nikita supprimés !');
-        mongoose.connection.close();
+        console.log();
         res.redirect('/mongo');
     });
 });

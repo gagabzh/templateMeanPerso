@@ -8,18 +8,16 @@ var router = express.Router();
  * Created by Gaga on 30/04/2017.
  */
 // Inclusion de Mongoose
-var mongoose = require('mongoose');
-var CommentaireArticleModel = require('../Public/javascripts/mangoConnect');
+var CommentaireArticleModel = require('../Public/javascripts/commentaireArticleSchema');
+var serviceDB = require('../Public/javascripts/serviceDB.js');
 
 router.get('/', function(req, res, next) {
 // On se connecte à la base de données
 // N'oubliez pas de lancer ~/mongodb/bin/mongod dans un terminal !
-    mongoose.connect('mongodb://localhost/blog', function(err) {
-        if (err) { throw err; }
-    });
+    serviceDB.openDB();
     CommentaireArticleModel.find(null, function (err, comms) {
         if (err) {
-            mongoose.connection.close();
+            serviceDB.closeDB();
             throw err;
         }
         // comms est un tableau de hash
@@ -27,15 +25,13 @@ router.get('/', function(req, res, next) {
         var  comments = comms;
         var nbre = 4;
         res.send(comments);
-        mongoose.connection.close();
+        serviceDB.closeDB();
     });
 }).get('/gaga', function(req, res, next) {
-    mongoose.connect('mongodb://localhost/blog', function(err) {
-        if (err) { throw err; }
-    });
+    serviceDB.openDB();
     CommentaireArticleModel.find({pseudo : 'Gaga'}, function (err, comms) {
         if (err) {
-            mongoose.connection.close();
+            serviceDB.closeDB();
             throw err;
         }
         // comms est un tableau de hash
@@ -43,7 +39,7 @@ router.get('/', function(req, res, next) {
         var  comments = comms;
         var nbre = 4;
         res.send(comments);
-        mongoose.connection.close();
+        serviceDB.closeDB();
     });
 });
 
