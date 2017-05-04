@@ -11,12 +11,11 @@ factory('serviceAjax', function serviceAjax($http) {
             return $http.get("http://localhost:3000/mongoREST");
         }
     };
-}).controller('myController', ['$scope','serviceAjax',
+}).controller('MainCtrl', ['$scope','serviceAjax',
     function($scope,serviceAjax) {
-        var post1 = "Les posts : ";
+        $scope.post1 = "Les posts : ";
         serviceAjax.findMenu().then(function (response) {
             $scope.post = response.data;
-            console.log($scope.post)
         });
     }
 ])

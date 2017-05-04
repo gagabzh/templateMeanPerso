@@ -1,13 +1,13 @@
-<html>
+<html ng-app="myApp">
 <head>
 
 </head>
 <body>
-<div ng-controller="my-controller">
+<div ng-controller="MainCtrl">
     <h2>{{post1}}</h2>
-    <ng-repeat com in post>
+    <div ng-repeat="com in post" >
         {{com.pseudo}} : {{com.contenu}}
-    </ng-repeat>
+    </div>
 </div>
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/javascripts/app.js"></script>
