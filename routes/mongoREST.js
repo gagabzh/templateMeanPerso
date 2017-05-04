@@ -8,8 +8,8 @@ var router = express.Router();
  * Created by Gaga on 30/04/2017.
  */
 // Inclusion de Mongoose
-var CommentaireArticleModel = require('../Public/javascripts/commentaireArticleSchema');
-var serviceDB = require('../Public/javascripts/serviceDB.js');
+var CommentaireArticleModel = require('../Services/commentaireArticleSchema');
+var serviceDB = require('../Services/serviceDB.js');
 
 router.get('/', function(req, res, next) {
 // On se connecte à la base de données

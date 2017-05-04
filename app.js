@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/indexCtrl');
 var users = require('./routes/usersCtrl');
 var angular = require('./routes/angularCtrl');
+var angularREST = require('./routes/angularRESTCtrl');
 var mongo = require('./routes/mongoCtrl');
 var mongoREST = require('./routes/mongoREST');
 var app = express();
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/angular', angular);
+app.use('/angularREST', angularREST);
 app.use('/mongo', mongo);
 app.use('/mongoREST', mongoREST);
 // catch 404 and forward to error handler

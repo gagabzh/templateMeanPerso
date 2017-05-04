@@ -5,8 +5,8 @@ var express = require('express');
 var router = express.Router();
 
 // Inclusion de Mongoose
-var CommentaireArticleModel = require('../Public/javascripts/commentaireArticleSchema');
-var serviceDB = require('../Public/javascripts/serviceDB.js');
+var CommentaireArticleModel = require('../Services/commentaireArticleSchema');
+var serviceDB = require('../Services/serviceDB.js');
 
 router.get('/', function(req, res, next) {
     serviceDB.openDB();
