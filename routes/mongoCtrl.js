@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 }).get('/init',function(req, res, next) {
     serviceDB.openDB();
     // On crée une instance du Model
-    var monCommentaire = new CommentaireArticleModel({ pseudo : 'Atinux' });
+    var monCommentaire = new CommentaireArticleModel({ pseudo : 'Toto' });
     monCommentaire.contenu = 'Salut, super article sur Mongoose !';
     var monCommentaire2 = new CommentaireArticleModel({ pseudo : 'Gaga' });
     monCommentaire2.contenu = 'Un autre article sur Mongoose !';
@@ -48,7 +48,7 @@ router.get('/', function(req, res, next) {
 
 }).get('/modify',function(req, res, next) {
     serviceDB.openDB();
-    CommentaireArticleModel.update({ pseudo : 'Atinux'}, { pseudo : 'Nikita' }, { multi : true }, function (err) {
+    CommentaireArticleModel.update({ pseudo : 'Toto'}, { pseudo : 'Titi' }, { multi : true }, function (err) {
         if (err) {
             serviceDB.closeDB()
             throw err;
@@ -67,9 +67,6 @@ router.get('/', function(req, res, next) {
             serviceDB.closeDB();
             throw err;
         }
-
-        console.log('Commentaires avec pseudo Nikita supprimés !');
-        console.log();
         res.redirect('/mongo');
     });
 });
